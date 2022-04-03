@@ -1,7 +1,7 @@
 import pytest
 import typing as tp
-
 from PIL import Image
+
 from image_editors import grayscale_transform, crop_transform, contrast_transform
 from image_editors import brightness_transform, colorfulness_transform
 
