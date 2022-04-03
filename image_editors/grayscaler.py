@@ -8,5 +8,5 @@ def grayscale_transform(colour_image: Image.Image) -> Image.Image:
     :return: grayscale image
     """
     grayscaler: ImageEnhance.Color = ImageEnhance.Color(colour_image)
-    grayscale_image = grayscaler.enhance(0)
+    grayscale_image: Image.Image = grayscaler.enhance(0)
     return grayscale_image
