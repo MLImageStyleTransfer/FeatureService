@@ -5,4 +5,4 @@ from app.views import (index, grayscale_transform_view, crop_transform_view,  # 
                        brightness_transform_view)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=get_port())
+    app.run(debug=True, port=get_port("BACKEND"))

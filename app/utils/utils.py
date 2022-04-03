@@ -4,6 +4,7 @@ import typing as tp
 from io import BytesIO
 from PIL import Image
 from dotenv import dotenv_values
+from .. import PATH_TO_APP
 
 
 def get_port(place: str = "BACKEND") -> int:
@@ -12,7 +13,8 @@ def get_port(place: str = "BACKEND") -> int:
     :param place: BACKEND or FRONTEND
     :return: port
     """
-    config: dict[str, tp.Optional[str]] = dotenv_values(".env")
+    print(PATH_TO_APP)
+    config: dict[str, tp.Optional[str]] = dotenv_values(PATH_TO_APP / ".env")
     port: int = 5555
 
     if place + "_PORT" in config:
