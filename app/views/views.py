@@ -43,7 +43,7 @@ def grayscale_transform_view() -> flask.Response:
     response: flask.Response
 
     if isinstance(request_data, dict) and ("image_code" in request_data.keys()):
-        image_code: str = request_data["image_code"][3:-2]
+        image_code: str = request_data["image_code"]
         try:
             result_image_code: str = controller(image_code, grayscale_transform)
             response = jsonify(result_image_code)
@@ -78,14 +78,14 @@ def crop_transform_view() -> flask.Response:
 
     if isinstance(request_data, dict) and ({"image_code", "params"} <= request_data.keys()) and \
             isinstance(request_data["params"], dict) and \
-            ({"upper_left", "lower_right"} <= request_data["params"].keys()):
-        image_code: str = request_data["image_code"][3:-2]
+            ({"left_upper", "right_lower"} <= request_data["params"].keys()):
+        image_code: str = request_data["image_code"]
         try:
             result_image_code: str = controller(
                 image_code,
                 partial(crop_transform,
-                        upper_left=request_data["params"]["upper_left"],
-                        lower_right=request_data["params"]["lower_right"]
+                        upper_left=tuple(map(int, request_data["params"]["left_upper"])),
+                        lower_right=tuple(map(int, request_data["params"]["right_lower"]))
                 )
             )
             response = jsonify(result_image_code)
@@ -120,19 +120,19 @@ def contrast_transform_view() -> flask.Response:
     if isinstance(request_data, dict) and ({"image_code", "params"} <= request_data.keys()) and \
             isinstance(request_data["params"], dict) and \
             ("contrast_factor" in request_data["params"]):
-        image_code: str = request_data["image_code"][3:-2]
+        image_code: str = request_data["image_code"]
         try:
             result_image_code: str = controller(
                 image_code,
                 partial(contrast_transform,
-                        contrast_factor=request_data["params"]["contrast_factor"]
+                        contrast_factor=float(request_data["params"]["contrast_factor"])
                 )
             )
             response = jsonify(result_image_code)
         except AssertionError:
-            response = Response(status=200)
+            response = Response(status=400)
     else:
-        response = Response(status=200)
+        response = Response(status=400)
 
     response.headers.add("Access-Control-Allow-Origin", f"http://localhost:{get_port('FRONTEND')}")
     return response
@@ -159,20 +159,20 @@ def colorfulness_transform_view() -> flask.Response:
 
     if isinstance(request_data, dict) and ({"image_code", "params"} <= request_data.keys()) and \
             isinstance(request_data["params"], dict) and \
-            ("color_factor" in request_data["params"].keys()):
-        image_code: str = request_data["image_code"][3:-2]
+            ("colorfulness_factor" in request_data["params"].keys()):
+        image_code: str = request_data["image_code"]
         try:
             result_image_code: str = controller(
                 image_code,
                 partial(colorfulness_transform,
-                        color_factor=request_data["params"]["color_factor"]
+                        color_factor=float(request_data["params"]["colorfulness_factor"])
                 )
             )
             response = jsonify(result_image_code)
         except AssertionError:
-            response = Response(status=200)
+            response = Response(status=400)
     else:
-        response = Response(status=200)
+        response = Response(status=400)
 
     response.headers.add("Access-Control-Allow-Origin", f"http://localhost:{get_port('FRONTEND')}")
     return response
@@ -200,19 +200,19 @@ def brightness_transform_view() -> flask.Response:
     if isinstance(request_data, dict) and ({"image_code", "params"} <= request_data.keys()) and \
             isinstance(request_data["params"], dict) and \
             ("brightness_factor" in request_data["params"].keys()):
-        image_code: str = request_data["image_code"][3:-2]
+        image_code: str = request_data["image_code"]
         try:
             result_image_code: str = controller(
                 image_code,
                 partial(brightness_transform,
-                        color_factor=request_data["params"]["brightness_factor"]
+                        brightness_factor=float(request_data["params"]["brightness_factor"])
                 )
             )
             response = jsonify(result_image_code)
         except AssertionError:
-            response = Response(status=200)
+            response = Response(status=400)
     else:
-        response = Response(status=200)
+        response = Response(status=400)
 
     response.headers.add("Access-Control-Allow-Origin", f"http://localhost:{get_port('FRONTEND')}")
     return response

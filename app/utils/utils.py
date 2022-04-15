@@ -13,7 +13,6 @@ def get_port(place: str = "BACKEND") -> int:
     :param place: BACKEND or FRONTEND
     :return: port
     """
-    print(PATH_TO_APP)
     config: dict[str, tp.Optional[str]] = dotenv_values(PATH_TO_APP / ".env")
     port: int = 5555
 
