@@ -46,7 +46,7 @@ def grayscale_transform_view() -> flask.Response:
         image_code: str = request_data["image_code"]
         try:
             result_image_code: str = controller(image_code, grayscale_transform)
-            response = jsonify(result_image_code)
+            response = jsonify({"image_code": result_image_code})
         except AssertionError:
             response = Response(status=400)
     else:
@@ -88,7 +88,7 @@ def crop_transform_view() -> flask.Response:
                         lower_right=tuple(map(int, request_data["params"]["right_lower"]))
                 )
             )
-            response = jsonify(result_image_code)
+            response = jsonify({"image_code": result_image_code})
         except AssertionError:
             response = Response(status=400)
     else:
@@ -128,7 +128,7 @@ def contrast_transform_view() -> flask.Response:
                         contrast_factor=float(request_data["params"]["contrast_factor"])
                 )
             )
-            response = jsonify(result_image_code)
+            response = jsonify({"image_code": result_image_code})
         except AssertionError:
             response = Response(status=400)
     else:
@@ -168,7 +168,7 @@ def colorfulness_transform_view() -> flask.Response:
                         color_factor=float(request_data["params"]["colorfulness_factor"])
                 )
             )
-            response = jsonify(result_image_code)
+            response = jsonify({"image_code": result_image_code})
         except AssertionError:
             response = Response(status=400)
     else:
@@ -208,7 +208,7 @@ def brightness_transform_view() -> flask.Response:
                         brightness_factor=float(request_data["params"]["brightness_factor"])
                 )
             )
-            response = jsonify(result_image_code)
+            response = jsonify({"image_code": result_image_code})
         except AssertionError:
             response = Response(status=400)
     else:
